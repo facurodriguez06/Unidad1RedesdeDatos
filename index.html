@@ -1,31 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#001219">
+    <meta name="description" content="GamiStudy - Plataforma interactiva y gamificada para el aprendizaje de Redes de Datos">
     <title>GamiStudy - Introducción a las Redes de Datos</title>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         /* =========================================
            VARIABLES CSS & TEMA "QUANTUM NETWORK"
            ========================================= */
         :root {
-            /* Paleta Red Cuántica (Abyssal Teal, Magenta, Cyan, Yellow) */
-            --bg-primary: #001219;    /* Fondo Abisal muy oscuro */
-            --bg-secondary: #002B36;  /* Contenedores (Teal Oscuro) */
-            --bg-tertiary: #004658;   /* Elementos interactivos reposo */
-            --text-main: #E0FBFC;     /* Texto claro cyan */
-            --accent-success: #4CC9F0; /* Cyan brillante para Aciertos / Enlaces estables */
-            --accent-alert: #EF476F;   /* Carmesí/Rosa para Errores / Ataques DDoS / Pérdida de paquetes */
-            --accent-warning: #FFD166; /* Amarillo para Cuellos de botella / Alertas */
-            --accent-interactive: #F72585; /* Magenta Eléctrico (Nodos / Routers / Interacción) */
-            
-            --font-body: 'Inter', 'Segoe UI', Roboto, sans-serif;
-            --font-tech: 'Fira Code', 'Courier New', monospace;
-            --transition-smooth: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* Paleta Red Cuántica */
+            --bg-primary: #001219;
+            --bg-secondary: #002B36;
+            --bg-tertiary: #004658;
+            --text-main: #E0FBFC;
+            --text-muted: #98C1D9;
+            --accent-success: #4CC9F0;
+            --accent-alert: #EF476F;
+            --accent-warning: #FFD166;
+            --accent-interactive: #F72585;
+
+            --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-tech: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            --transition-smooth: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+            --safe-left: env(safe-area-inset-left, 0px);
+            --safe-right: env(safe-area-inset-right, 0px);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
 
         body {
             background-color: var(--bg-primary);
@@ -33,49 +60,90 @@
             font-family: var(--font-body);
             line-height: 1.6;
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            padding-left: var(--safe-left);
+            padding-right: var(--safe-right);
         }
 
-        /* HEADER Y NAVEGACIÓN */
+        /* HEADER Y NAVEGACIÓN RESPONSIVOS */
         header {
-            padding: 1.5rem 2rem;
+            padding: clamp(1rem, 3vw, 1.6rem) clamp(0.8rem, 4vw, 2rem);
+            padding-top: calc(clamp(1rem, 3vw, 1.6rem) + var(--safe-top));
             background-color: var(--bg-secondary);
             border-bottom: 2px solid var(--accent-interactive);
             text-align: center;
-            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.2);
-            z-index: 10;
+            box-shadow: 0 4px 20px rgba(247, 37, 133, 0.25);
+            z-index: 20;
+            width: 100%;
         }
 
-        header h1 { font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 1rem; }
-        header span.tech { color: var(--accent-interactive); font-family: var(--font-tech); text-shadow: 0 0 8px rgba(247, 37, 133, 0.4); }
+        header h1 {
+            font-size: clamp(1.15rem, 3.8vw, 1.85rem);
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: clamp(0.6rem, 2vw, 1.1rem);
+            word-break: break-word;
+        }
 
-        nav { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; }
+        header span.tech {
+            color: var(--accent-interactive);
+            font-family: var(--font-tech);
+            text-shadow: 0 0 10px rgba(247, 37, 133, 0.5);
+            display: inline-block;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
 
         .nav-btn {
             background-color: var(--bg-tertiary);
             color: var(--text-main);
-            border: 1px solid transparent;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
+            border: 1px solid rgba(76, 201, 240, 0.15);
+            padding: 0.55rem 1rem;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: clamp(0.8rem, 2vw, 0.92rem);
+            transition: all 0.25s ease;
+            touch-action: manipulation;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 42px;
         }
 
-        .nav-btn:hover, .nav-btn.active {
+        .nav-btn:hover {
+            border-color: var(--accent-interactive);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .nav-btn.active {
             background-color: var(--accent-interactive);
             color: #000;
-            box-shadow: 0 0 15px rgba(247, 37, 133, 0.4);
+            border-color: var(--accent-interactive);
+            box-shadow: 0 0 16px rgba(247, 37, 133, 0.5);
             transform: translateY(-2px);
+            font-weight: 700;
         }
 
         /* CONTENEDOR PRINCIPAL */
         main {
             flex-grow: 1;
-            padding: 2rem 1rem;
+            padding: clamp(1rem, 3.5vw, 2.2rem) clamp(0.8rem, 3vw, 1.5rem);
+            padding-bottom: calc(clamp(1.5rem, 4vw, 2.5rem) + var(--safe-bottom));
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -88,146 +156,630 @@
         .module-section {
             display: none;
             width: 100%;
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 0.4s ease forwards;
         }
 
-        .module-section.active { display: flex; flex-direction: column; align-items: center; }
+        .module-section.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .instructions {
-            margin-bottom: 2rem;
+            margin-bottom: clamp(1rem, 2.5vw, 1.8rem);
             text-align: center;
-            font-size: 1.1rem;
+            font-size: clamp(0.92rem, 2.2vw, 1.1rem);
             color: var(--accent-interactive);
-            padding: 0 1rem;
+            padding: 0 0.5rem;
+            max-width: 800px;
+            font-weight: 500;
+        }
+
+        .touch-hint {
+            display: block;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 0.35rem;
+            font-family: var(--font-tech);
         }
 
         /* =========================================
-           MÓDULO 1: FLASHCARDS
+           MÓDULO 1: FLASHCARDS RESPONSIVAS
            ========================================= */
-        .scene { width: 100%; max-width: 750px; height: 380px; perspective: 1200px; margin-bottom: 2rem; }
-        .card { width: 100%; height: 100%; position: relative; transition: transform var(--transition-smooth); transform-style: preserve-3d; cursor: pointer; }
-        .card.is-flipped { transform: rotateY(180deg); }
-        
+        .scene {
+            width: 100%;
+            max-width: 750px;
+            min-height: 280px;
+            height: clamp(300px, 46vh, 420px);
+            perspective: 1200px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform var(--transition-smooth);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+
+        .card.is-flipped {
+            transform: rotateY(180deg);
+        }
+
         .card-face {
-            position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem;
-            border-radius: 12px; background-color: var(--bg-secondary); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center; border: 1px solid rgba(247, 37, 133, 0.3);
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(1.2rem, 4vw, 2.2rem);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            border: 1px solid rgba(247, 37, 133, 0.35);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
-        .card-front h2 { font-size: 1.4rem; color: var(--text-main); }
-        .card-back { transform: rotateY(180deg); gap: 1rem; }
-        .card-back p { font-size: 1.1rem; font-family: var(--font-tech); color: var(--accent-success); }
-        .card-back .citation { font-size: 0.8rem; color: #888; margin-top: 1rem; }
-        
-        .controls { display: flex; gap: 1rem; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; width: 100%; max-width: 750px; justify-content: center;}
-        .controls.show { opacity: 1; pointer-events: auto; }
-        .btn-action { padding: 0.8rem 2rem; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: transform 0.2s; flex: 1; max-width: 300px; }
-        .btn-action:hover { transform: scale(1.05); }
-        .btn-easy { background-color: var(--accent-success); color: #000; }
-        .btn-hard { background-color: var(--accent-alert); color: #fff; }
 
-        /* =========================================
-           MÓDULO 2: QUIZ
-           ========================================= */
-        #quiz-container { width: 100%; max-width: 800px; background: var(--bg-secondary); padding: 2rem; border-radius: 12px; border-top: 4px solid var(--accent-interactive); }
-        .timer-bar { width: 100%; height: 10px; background: #000; border-radius: 5px; margin-bottom: 2rem; overflow: hidden; }
-        .timer-fill { height: 100%; background: var(--accent-interactive); width: 100%; transition: width 1s linear; }
-        .timer-fill.danger { background: var(--accent-alert); }
-        .question-text { font-size: 1.3rem; margin-bottom: 1.5rem; }
-        .options-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-        .option-btn { background: var(--bg-primary); border: 2px solid var(--bg-tertiary); color: var(--text-main); padding: 1rem; border-radius: 8px; cursor: pointer; text-align: left; font-size: 1.1rem; transition: all 0.2s; }
-        .option-btn:hover { border-color: var(--accent-interactive); background: rgba(247, 37, 133, 0.1); }
-        .option-btn.correct { background: var(--accent-success); color: #000; border-color: var(--accent-success); }
-        .option-btn.wrong { background: var(--accent-alert); color: #fff; border-color: var(--accent-alert); }
-
-        /* =========================================
-           MÓDULO 3: DRAG & DROP
-           ========================================= */
-        .dd-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; }
-        .terms-col, .defs-col { display: flex; flex-direction: column; gap: 1rem; background: var(--bg-secondary); padding: 1.5rem; border-radius: 12px; }
-        .draggable-term { background: var(--bg-tertiary); padding: 1rem; border-radius: 8px; cursor: grab; font-family: var(--font-tech); font-weight: bold; border: 1px solid var(--accent-warning); user-select: none; text-align: center; color: var(--accent-warning); }
-        .draggable-term:active { cursor: grabbing; }
-        .drop-zone { background: var(--bg-primary); border: 2px dashed var(--bg-tertiary); padding: 1rem; min-height: 80px; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
-        .drop-zone.drag-over { border-color: var(--accent-warning); background: rgba(255, 209, 102, 0.1); }
-        .drop-zone.matched { border-color: var(--accent-success); background: rgba(76, 201, 240, 0.1); color: var(--text-main); }
-
-        /* =========================================
-           MÓDULO 4: COMPLETAR TEXTOS
-           ========================================= */
-        .fill-container { width: 100%; max-width: 800px; background: var(--bg-secondary); padding: 2rem; border-radius: 12px; font-size: 1.3rem; line-height: 2; border-left: 4px solid var(--accent-success); }
-        .blank-input { 
-            background: var(--bg-primary); border: none; border-bottom: 2px solid var(--accent-interactive); 
-            color: var(--accent-interactive); font-family: var(--font-tech); font-size: 1.2rem; 
-            padding: 0.2rem 0.5rem; width: 160px; text-align: center; outline: none; transition: all 0.3s;
+        .card-front h2 {
+            font-size: clamp(1.05rem, 3.2vw, 1.45rem);
+            color: var(--text-main);
+            line-height: 1.5;
+            font-weight: 600;
         }
-        .blank-input:focus { border-bottom-color: var(--accent-success); background: rgba(76, 201, 240, 0.1); }
-        .blank-input.correct { border-bottom-color: var(--accent-success); color: var(--accent-success); pointer-events: none; }
-        .blank-input.wrong { border-bottom-color: var(--accent-alert); color: var(--accent-alert); animation: shake 0.4s; }
-        .check-btn { margin-top: 2rem; padding: 1rem 2rem; font-size: 1.2rem; background: var(--accent-interactive); color: #000; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; display: block; width: 100%; }
-        .check-btn:hover { background: var(--accent-success); transform: translateY(-3px); }
+
+        .card-front .flip-prompt {
+            margin-top: 1.2rem;
+            font-size: 0.85rem;
+            color: var(--accent-interactive);
+            font-family: var(--font-tech);
+            background: rgba(247, 37, 133, 0.1);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px dashed var(--accent-interactive);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            gap: 0.8rem;
+            justify-content: space-between;
+        }
+
+        .card-back p {
+            font-size: clamp(0.92rem, 2.5vw, 1.1rem);
+            font-family: var(--font-tech);
+            color: var(--accent-success);
+            line-height: 1.55;
+            margin: auto 0;
+        }
+
+        .card-back .citation {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            font-family: var(--font-body);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.4rem;
+            width: 100%;
+        }
+
+        .controls {
+            display: flex;
+            gap: 0.8rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(8px);
+            width: 100%;
+            max-width: 750px;
+            justify-content: center;
+        }
+
+        .controls.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .btn-action {
+            padding: 0.85rem 1.5rem;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: clamp(0.88rem, 2vw, 1rem);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            max-width: 320px;
+            min-height: 48px;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .btn-easy {
+            background-color: var(--accent-success);
+            color: #000;
+        }
+
+        .btn-hard {
+            background-color: var(--accent-alert);
+            color: #fff;
+        }
 
         /* =========================================
-           MÓDULO 5: CLASIFICADOR
+           MÓDULO 2: QUIZ RESPONSIVO
            ========================================= */
-        .sorter-container { display: flex; flex-direction: column; width: 100%; max-width: 1000px; gap: 2rem; align-items: center; }
-        .item-pool { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; padding: 1.5rem; background: var(--bg-secondary); border-radius: 12px; width: 100%; min-height: 120px; border: 2px dashed var(--bg-tertiary); }
-        .sorter-bins { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; width: 100%; }
-        .bin { background: var(--bg-secondary); border-radius: 12px; padding: 1.5rem; text-align: center; min-height: 300px; display: flex; flex-direction: column; border: 2px solid transparent; transition: all 0.3s; }
-        
-        .bin-circuitos { border-color: var(--accent-warning); } /* Amarillo: Circuitos (Viejo/Fijo) */
-        .bin-paquetes { border-color: var(--accent-interactive); } /* Magenta: Paquetes (Nuevo/Dinámico) */
-        
-        .bin h3 { margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem; }
-        .bin-items { flex-grow: 1; display: flex; flex-direction: column; gap: 0.5rem; }
-        .sorter-item { background: var(--bg-tertiary); padding: 0.8rem; border-radius: 6px; cursor: grab; font-weight: 500; border-left: 3px solid var(--accent-success); }
-        .sorter-item:active { cursor: grabbing; }
+        #quiz-container {
+            width: 100%;
+            max-width: 800px;
+            background: var(--bg-secondary);
+            padding: clamp(1.2rem, 4vw, 2rem);
+            border-radius: var(--radius-md);
+            border-top: 4px solid var(--accent-interactive);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
 
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        .completion-msg { text-align: center; font-size: 2rem; color: var(--accent-success); margin-top: 2rem; text-shadow: 0 0 10px rgba(76, 201, 240, 0.3); }
-        
+        .timer-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 4px;
+            margin-bottom: clamp(1.2rem, 3vw, 1.8rem);
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: var(--accent-interactive);
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .timer-fill.danger {
+            background: var(--accent-alert);
+        }
+
+        .question-text {
+            font-size: clamp(1.05rem, 3vw, 1.3rem);
+            margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .option-btn {
+            background: var(--bg-primary);
+            border: 2px solid var(--bg-tertiary);
+            color: var(--text-main);
+            padding: clamp(0.75rem, 2vw, 1rem) clamp(0.9rem, 2.5vw, 1.2rem);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            text-align: left;
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-interactive);
+            background: rgba(247, 37, 133, 0.12);
+        }
+
+        .option-btn:active {
+            transform: scale(0.99);
+        }
+
+        .option-btn.correct {
+            background: var(--accent-success) !important;
+            color: #000 !important;
+            border-color: var(--accent-success) !important;
+            font-weight: 700;
+        }
+
+        .option-btn.wrong {
+            background: var(--accent-alert) !important;
+            color: #fff !important;
+            border-color: var(--accent-alert) !important;
+            font-weight: 700;
+        }
+
+        /* =========================================
+           MÓDULO 3: DRAG & DROP & TOUCH SELECTION
+           ========================================= */
+        .dd-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: clamp(1rem, 3vw, 1.8rem);
+            width: 100%;
+        }
+
+        .terms-col,
+        .defs-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            background: var(--bg-secondary);
+            padding: clamp(1rem, 2.5vw, 1.4rem);
+            border-radius: var(--radius-md);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+        }
+
+        .draggable-term {
+            background: var(--bg-tertiary);
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: grab;
+            font-family: var(--font-tech);
+            font-weight: 700;
+            border: 1px solid var(--accent-warning);
+            user-select: none;
+            text-align: center;
+            color: var(--accent-warning);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            touch-action: manipulation;
+            transition: all 0.2s ease;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .draggable-term:active {
+            cursor: grabbing;
+        }
+
+        .draggable-term.selected {
+            outline: 3px solid var(--accent-interactive);
+            box-shadow: 0 0 16px var(--accent-interactive);
+            transform: scale(1.02);
+            background: rgba(247, 37, 133, 0.25);
+            color: #fff;
+        }
+
+        .drop-zone {
+            background: var(--bg-primary);
+            border: 2px dashed var(--bg-tertiary);
+            padding: 0.85rem 1rem;
+            min-height: 84px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            touch-action: manipulation;
+            cursor: pointer;
+        }
+
+        .drop-zone.zone-active {
+            border-color: rgba(76, 201, 240, 0.5);
+            background: rgba(76, 201, 240, 0.05);
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--accent-warning);
+            background: rgba(255, 209, 102, 0.15);
+            transform: scale(1.01);
+        }
+
+        .drop-zone.matched {
+            border: 2px solid var(--accent-success);
+            background: rgba(76, 201, 240, 0.15);
+            color: var(--text-main);
+            cursor: default;
+        }
+
+        .shake-zone {
+            animation: shake 0.4s ease;
+        }
+
+        /* =========================================
+           MÓDULO 4: COMPLETAR TEXTOS RESPONSIVO
+           ========================================= */
+        .fill-container {
+            width: 100%;
+            max-width: 850px;
+            background: var(--bg-secondary);
+            padding: clamp(1.2rem, 4vw, 2.2rem);
+            border-radius: var(--radius-md);
+            font-size: clamp(1.02rem, 2.5vw, 1.25rem);
+            line-height: 2.2;
+            border-left: 4px solid var(--accent-success);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .fill-item {
+            margin-bottom: 1.4rem;
+            word-break: break-word;
+        }
+
+        .blank-input {
+            background: var(--bg-primary);
+            border: none;
+            border-bottom: 2px solid var(--accent-interactive);
+            color: var(--accent-interactive);
+            font-family: var(--font-tech);
+            font-size: 16px; /* Previene auto-zoom molesto en iOS */
+            padding: 0.25rem 0.5rem;
+            width: clamp(110px, 26vw, 150px);
+            max-width: 100%;
+            text-align: center;
+            outline: none;
+            transition: all 0.25s ease;
+            border-radius: 4px 4px 0 0;
+            display: inline-block;
+            vertical-align: baseline;
+        }
+
+        .blank-input:focus {
+            border-bottom-color: var(--accent-success);
+            background: rgba(76, 201, 240, 0.15);
+        }
+
+        .blank-input.correct {
+            border-bottom-color: var(--accent-success);
+            color: var(--accent-success);
+            pointer-events: none;
+            background: rgba(76, 201, 240, 0.1);
+        }
+
+        .blank-input.wrong {
+            border-bottom-color: var(--accent-alert);
+            color: var(--accent-alert);
+            background: rgba(239, 71, 111, 0.1);
+            animation: shake 0.4s;
+        }
+
+        .check-btn {
+            margin-top: 1.5rem;
+            padding: 0.9rem 1.5rem;
+            font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+            background: var(--accent-interactive);
+            color: #000;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: block;
+            width: 100%;
+            min-height: 48px;
+            touch-action: manipulation;
+        }
+
+        .check-btn:hover {
+            background: var(--accent-success);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(76, 201, 240, 0.3);
+        }
+
+        /* =========================================
+           MÓDULO 5: CLASIFICADOR RESPONSIVO
+           ========================================= */
+        .sorter-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1000px;
+            gap: clamp(1rem, 2.5vw, 1.8rem);
+            align-items: center;
+        }
+
+        .item-pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            padding: clamp(1rem, 2.5vw, 1.4rem);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            width: 100%;
+            min-height: 100px;
+            border: 2px dashed var(--bg-tertiary);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .sorter-bins {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1rem, 3vw, 1.8rem);
+            width: 100%;
+        }
+
+        .bin {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: clamp(1rem, 2.5vw, 1.4rem);
+            text-align: center;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid transparent;
+            transition: all 0.25s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+            touch-action: manipulation;
+            cursor: pointer;
+        }
+
+        .bin-circuitos {
+            border-color: var(--accent-warning);
+        }
+
+        .bin-paquetes {
+            border-color: var(--accent-interactive);
+        }
+
+        .bin h3 {
+            margin-bottom: 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            padding-bottom: 0.4rem;
+            font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+        }
+
+        .bin p.bin-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .bin-items {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .sorter-item {
+            background: var(--bg-tertiary);
+            padding: 0.75rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: grab;
+            font-weight: 500;
+            border-left: 3px solid var(--accent-success);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            touch-action: manipulation;
+            user-select: none;
+            transition: all 0.2s ease;
+            text-align: left;
+            line-height: 1.45;
+        }
+
+        .sorter-item:active {
+            cursor: grabbing;
+        }
+
+        .sorter-item.selected {
+            outline: 2px solid var(--accent-interactive);
+            box-shadow: 0 0 14px var(--accent-interactive);
+            transform: scale(1.02);
+            background: rgba(247, 37, 133, 0.2);
+            color: #fff;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .completion-msg {
+            text-align: center;
+            font-size: clamp(1.3rem, 4vw, 2rem);
+            color: var(--accent-success);
+            margin-top: 1.5rem;
+            text-shadow: 0 0 12px rgba(76, 201, 240, 0.4);
+            font-weight: 700;
+        }
+
         /* CONFETTI CANVAS */
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+        }
 
         /* =========================================
-           MEDIA QUERIES PARA RESPONSIVIDAD TOTAL
+           MEDIA QUERIES ESPECÍFICAS POR DISPOSITIVO
            ========================================= */
+
+        /* Dispositivos muy pequeños (< 400px) */
+        @media (max-width: 400px) {
+            header { padding: 0.8rem 0.5rem; }
+            .nav-btn { width: 100%; padding: 0.7rem 0.5rem; font-size: 0.85rem; }
+            .scene { height: 350px; }
+            .blank-input { width: 100px; }
+        }
+
+        /* Móviles y tablets pequeñas (<= 768px) */
         @media (max-width: 768px) {
-            header { padding: 1rem; }
-            header h1 { font-size: 1.4rem; }
-            nav { flex-direction: column; gap: 0.5rem; width: 100%; }
-            .nav-btn { width: 100%; padding: 0.8rem; }
-            
-            main { padding: 1rem; }
-            
-            .scene { height: 460px; } /* Mayor altura para texto en móviles */
-            .card-face { padding: 1.5rem; }
-            .card-front h2 { font-size: 1.2rem; }
-            .card-back p { font-size: 0.95rem; }
-            
-            .controls { flex-direction: column; width: 100%; }
-            .btn-action { width: 100%; max-width: 100%; }
-            
-            .dd-container { grid-template-columns: 1fr; gap: 1rem; }
-            .sorter-bins { grid-template-columns: 1fr; gap: 1rem; }
-            
-            .blank-input { width: 120px; font-size: 1rem; }
-            .fill-container { font-size: 1.1rem; padding: 1.5rem; }
-            .check-btn { padding: 0.8rem 1rem; font-size: 1rem; }
+            nav {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 0.4rem;
+            }
+            .nav-btn:last-child:nth-child(odd) {
+                grid-column: span 2;
+            }
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn-action {
+                width: 100%;
+                max-width: 100%;
+            }
+            .scene {
+                height: clamp(320px, 50vh, 440px);
+            }
+            .dd-container, .sorter-bins {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Pantallas grandes y Ultra-wide (>= 1200px) */
+        @media (min-width: 1200px) {
+            main {
+                padding-top: 2.5rem;
+            }
+            .scene {
+                max-width: 820px;
+                height: 400px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="confetti-canvas"></canvas>
 
     <header>
         <h1>GamiStudy // <span class="tech">Introducción a Redes de Datos</span></h1>
-        <nav id="main-nav">
+        <nav id="main-nav" aria-label="Módulos de Estudio">
             <button class="nav-btn active" data-target="module-flashcards">Nodos Flashcards</button>
             <button class="nav-btn" data-target="module-quiz">Evaluación de Ping</button>
             <button class="nav-btn" data-target="module-dragdrop">Pila de Protocolos</button>
@@ -239,7 +791,9 @@
     <main>
         <!-- MÓDULO 1: FLASHCARDS -->
         <section id="module-flashcards" class="module-section active">
-            <p class="instructions">Repaso Activo: Haz clic en la tarjeta para revelar los fundamentos del enrutamiento y seguridad.</p>
+            <p class="instructions">
+                Repaso Activo: Haz clic o toca la tarjeta para revelar los fundamentos de la red.
+            </p>
             <div class="scene" id="flashcard-scene"></div>
             <div class="controls" id="flashcard-controls">
                 <button class="btn-action btn-hard" id="btn-hard">Difícil (Reenviar Paquete)</button>
@@ -249,16 +803,23 @@
 
         <!-- MÓDULO 2: QUIZ -->
         <section id="module-quiz" class="module-section">
-            <p class="instructions">Resolución bajo presión: Selecciona la respuesta correcta antes del Timeout (15s).</p>
+            <p class="instructions">
+                Resolución bajo presión: Selecciona la respuesta correcta antes del Timeout (15s).
+            </p>
             <div id="quiz-container">
-                <div class="timer-bar"><div class="timer-fill" id="quiz-timer"></div></div>
+                <div class="timer-bar" role="progressbar" aria-label="Tiempo restante">
+                    <div class="timer-fill" id="quiz-timer"></div>
+                </div>
                 <div id="quiz-content"></div>
             </div>
         </section>
 
         <!-- MÓDULO 3: DRAG & DROP -->
         <section id="module-dragdrop" class="module-section">
-            <p class="instructions">Arrastra y vincula cada Capa de la Pila de Protocolos de Internet con su función exacta.</p>
+            <p class="instructions">
+                Vincula cada Capa de la Pila de Protocolos con su función exacta.
+                <span class="touch-hint">💡 En táctil/móviles: Toca un término y luego toca la definición destino.</span>
+            </p>
             <div class="dd-container">
                 <div class="terms-col" id="dd-terms"></div>
                 <div class="defs-col" id="dd-defs"></div>
@@ -267,7 +828,9 @@
 
         <!-- MÓDULO 4: COMPLETAR TEXTOS -->
         <section id="module-fill" class="module-section">
-            <p class="instructions">Completa el código teórico de las redes. (No requiere tildes para mayor velocidad).</p>
+            <p class="instructions">
+                Completa el código teórico de las redes (no requiere acentos).
+            </p>
             <div class="fill-container">
                 <div id="fill-content"></div>
                 <button class="check-btn" id="btn-check-fill">Auditar y Validar Conexión</button>
@@ -276,18 +839,21 @@
 
         <!-- MÓDULO 5: CLASIFICADOR -->
         <section id="module-sorter" class="module-section">
-            <p class="instructions">Clasifica la característica del diseño de red: ¿Pertenece a la Conmutación de Circuitos o de Paquetes?</p>
+            <p class="instructions">
+                Clasifica cada principio: ¿Conmutación de Circuitos o de Paquetes?
+                <span class="touch-hint">💡 En táctil/móviles: Toca un elemento y luego toca el contenedor correspondiente.</span>
+            </p>
             <div class="sorter-container">
                 <div class="item-pool" id="sorter-pool"></div>
                 <div class="sorter-bins">
-                    <div class="bin bin-circuitos" data-bin="circuitos">
+                    <div class="bin bin-circuitos" data-bin="circuitos" tabindex="0">
                         <h3 style="color: var(--accent-warning);">Conmutación de Circuitos</h3>
-                        <p style="font-size:0.9rem; color:#aaa; margin-bottom:1rem;">Red Telefónica Clásica. Ancho de banda reservado.</p>
+                        <p class="bin-desc">Red Telefónica Clásica. Ancho de banda y recursos reservados.</p>
                         <div class="bin-items" id="bin-circuitos"></div>
                     </div>
-                    <div class="bin bin-paquetes" data-bin="paquetes">
+                    <div class="bin bin-paquetes" data-bin="paquetes" tabindex="0">
                         <h3 style="color: var(--accent-interactive);">Conmutación de Paquetes</h3>
-                        <p style="font-size:0.9rem; color:#aaa; margin-bottom:1rem;">Internet. Datos troceados y recursos compartidos.</p>
+                        <p class="bin-desc">Internet Moderna. Datos troceados y multiplexación estadística.</p>
                         <div class="bin-items" id="bin-paquetes"></div>
                     </div>
                 </div>
@@ -298,7 +864,7 @@
     <script>
         /**
          * ========================================================================
-         * MOTOR CORE: DATOS EXTRAÍDOS (100% NEUTRAL Y RESPONSIVO)
+         * MOTOR CORE: DATOS DE ESTUDIO
          * ========================================================================
          */
         const StudyData = {
@@ -343,24 +909,33 @@
 
         /**
          * ========================================================================
-         * SISTEMA DE CELEBRACIÓN (CONFETTI QUANTUM)
+         * SISTEMA DE CELEBRACIÓN (CONFETTI QUANTUM RESPONSIVO)
          * ========================================================================
          */
+        const confettiCanvas = document.getElementById('confetti-canvas');
+        function resizeCanvas() {
+            if (confettiCanvas) {
+                confettiCanvas.width = window.innerWidth;
+                confettiCanvas.height = window.innerHeight;
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
         function fireConfetti() {
-            const canvas = document.getElementById('confetti-canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            const ctx = confettiCanvas.getContext('2d');
+            resizeCanvas();
             
             let particles = [];
-            // Colores: Magenta Eléctrico, Cyan Brillante, Amarillo Alerta, Cyan Claro
             const colors = ['#F72585', '#4CC9F0', '#FFD166', '#E0FBFC']; 
 
-            for (let i = 0; i < 150; i++) {
+            const particleCount = window.innerWidth < 600 ? 90 : 150;
+
+            for (let i = 0; i < particleCount; i++) {
                 particles.push({
-                    x: canvas.width / 2,
-                    y: canvas.height / 2 + 100,
-                    r: Math.random() * 6 + 2,
+                    x: confettiCanvas.width / 2,
+                    y: confettiCanvas.height / 2 + 50,
+                    r: Math.random() * 5 + 2,
                     dx: Math.random() * 10 - 5,
                     dy: Math.random() * -10 - 5,
                     color: colors[Math.floor(Math.random() * colors.length)],
@@ -369,15 +944,15 @@
             }
 
             function draw() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
                 let activeParticles = 0;
                 particles.forEach(p => {
-                    p.dy += 0.2; // Gravedad
+                    p.dy += 0.22;
                     p.x += p.dx;
                     p.y += p.dy;
                     p.tilt += 0.1;
 
-                    if (p.y < canvas.height) activeParticles++;
+                    if (p.y < confettiCanvas.height) activeParticles++;
 
                     ctx.beginPath();
                     ctx.lineWidth = p.r;
@@ -388,7 +963,7 @@
                 });
 
                 if (activeParticles > 0) requestAnimationFrame(draw);
-                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+                else ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
             }
             draw();
         }
@@ -403,12 +978,16 @@
                 document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                 document.querySelectorAll('.module-section').forEach(s => s.classList.remove('active'));
                 
-                e.target.classList.add('active');
-                const targetId = e.target.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
+                const button = e.currentTarget;
+                button.classList.add('active');
+                const targetId = button.getAttribute('data-target');
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) targetSection.classList.add('active');
 
-                if(targetId === 'module-quiz') {
-                    if(quizApp.currentIndex < quizApp.questions.length && !quizApp.isFinished) quizApp.startTimer();
+                if (targetId === 'module-quiz') {
+                    if (quizApp.currentIndex < quizApp.questions.length && !quizApp.isFinished) {
+                        quizApp.startTimer();
+                    }
                 } else {
                     quizApp.pauseTimer();
                 }
@@ -437,24 +1016,49 @@
                 this.controls.classList.remove('show');
                 
                 if (this.deck.length === 0) {
-                    this.scene.innerHTML = `<h2 class="completion-msg">¡Nodos y Protocolos Asimilados! 🌐</h2>`;
+                    this.scene.innerHTML = `
+                        <div class="card-face" style="position:static; height:100%; border: 2px solid var(--accent-success);">
+                            <h2 class="completion-msg">¡Nodos y Protocolos Asimilados! 🌐</h2>
+                            <p style="margin-top:1rem; color:var(--text-muted);">Has completado todas las tarjetas del bloque.</p>
+                            <button class="nav-btn" style="margin-top:1.5rem;" onclick="flashcardApp.restart()">Reiniciar Mazo</button>
+                        </div>`;
                     this.controls.style.display = 'none';
                     fireConfetti();
                     return;
                 }
+
+                this.controls.style.display = 'flex';
                 const card = document.createElement('div');
                 card.className = 'card';
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-label', 'Tarjeta de estudio, pulsa para voltear');
+
                 card.innerHTML = `
-                    <div class="card-face card-front"><h2>${this.deck[0].front}</h2></div>
-                    <div class="card-face card-back"><p>${this.deck[0].back.replace(/\n/g, '<br>')}</p><span class="citation">Fuente: ${this.deck[0].cite}</span></div>
+                    <div class="card-face card-front">
+                        <h2>${this.deck[0].front}</h2>
+                        <span class="flip-prompt">🔄 Toca para voltear</span>
+                    </div>
+                    <div class="card-face card-back">
+                        <p>${this.deck[0].back.replace(/\n/g, '<br>')}</p>
+                        <span class="citation">Fuente: ${this.deck[0].cite}</span>
+                    </div>
                 `;
                 
-                card.onclick = () => {
+                const toggleFlip = () => {
                     card.classList.toggle('is-flipped');
                     if (card.classList.contains('is-flipped')) {
                         this.controls.classList.add('show');
                     } else {
                         this.controls.classList.remove('show');
+                    }
+                };
+
+                card.onclick = toggleFlip;
+                card.onkeydown = (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleFlip();
                     }
                 };
                 
@@ -463,10 +1067,16 @@
             handleAnswer(isEasy) {
                 const card = this.deck.shift();
                 if (!isEasy) this.deck.push(card);
-                const cardDOM = document.querySelector('.card');
-                cardDOM.style.transform = isEasy ? 'translateX(150%) rotateY(180deg)' : 'translateX(-150%) rotateY(180deg)';
-                cardDOM.style.opacity = '0';
-                setTimeout(() => this.renderCard(), 300);
+                const cardDOM = this.scene.querySelector('.card');
+                if (cardDOM) {
+                    cardDOM.style.transform = isEasy ? 'translateX(130%) rotateY(180deg)' : 'translateX(-130%) rotateY(180deg)';
+                    cardDOM.style.opacity = '0';
+                }
+                setTimeout(() => this.renderCard(), 280);
+            }
+            restart() {
+                this.deck = [...StudyData.flashcards];
+                this.renderCard();
             }
         }
 
@@ -478,34 +1088,58 @@
         class QuizManager {
             constructor(data) {
                 this.questions = [...data].sort(() => Math.random() - 0.5);
-                this.currentIndex = 0; this.score = 0; this.timeLeft = 15; this.isFinished = false;
+                this.currentIndex = 0; 
+                this.score = 0; 
+                this.timeLeft = 15; 
+                this.isFinished = false;
                 this.container = document.getElementById('quiz-content');
                 this.timerBar = document.getElementById('quiz-timer');
             }
             start() {
-                this.currentIndex = 0; this.score = 0; this.isFinished = false;
+                this.currentIndex = 0; 
+                this.score = 0; 
+                this.isFinished = false;
                 this.questions.sort(() => Math.random() - 0.5);
                 this.renderQuestion();
             }
             renderQuestion() {
                 if (this.currentIndex >= this.questions.length) return this.endQuiz();
-                this.pauseTimer(); this.timeLeft = 15; this.updateTimerBar();
+                this.pauseTimer(); 
+                this.timeLeft = 15; 
+                this.updateTimerBar();
+                
                 const q = this.questions[this.currentIndex];
-                let html = `<div class="question-text">${q.q}</div><div class="options-grid">`;
-                q.options.forEach((opt, index) => html += `<button class="option-btn" data-index="${index}">${opt}</button>`);
+                let html = `
+                    <div class="question-text">${this.currentIndex + 1}. ${q.q}</div>
+                    <div class="options-grid">`;
+                q.options.forEach((opt, index) => {
+                    html += `<button class="option-btn" data-index="${index}">${opt}</button>`;
+                });
                 html += `</div>`;
+                
                 this.container.innerHTML = html;
-                document.querySelectorAll('.option-btn').forEach(btn => btn.onclick = (e) => this.checkAnswer(parseInt(e.target.getAttribute('data-index')), e.target));
-                if(document.getElementById('module-quiz').classList.contains('active')) this.startTimer();
+                document.querySelectorAll('.option-btn').forEach(btn => {
+                    btn.onclick = (e) => this.checkAnswer(parseInt(e.currentTarget.getAttribute('data-index')), e.currentTarget);
+                });
+
+                if (document.getElementById('module-quiz').classList.contains('active')) {
+                    this.startTimer();
+                }
             }
             startTimer() {
                 clearInterval(this.timerInterval);
                 this.timerInterval = setInterval(() => {
-                    this.timeLeft--; this.updateTimerBar();
-                    if (this.timeLeft <= 0) { this.pauseTimer(); this.checkAnswer(-1, null); }
+                    this.timeLeft--; 
+                    this.updateTimerBar();
+                    if (this.timeLeft <= 0) { 
+                        this.pauseTimer(); 
+                        this.checkAnswer(-1, null); 
+                    }
                 }, 1000);
             }
-            pauseTimer() { clearInterval(this.timerInterval); }
+            pauseTimer() { 
+                clearInterval(this.timerInterval); 
+            }
             updateTimerBar() {
                 const percentage = (this.timeLeft / 15) * 100;
                 this.timerBar.style.width = `${percentage}%`;
@@ -516,13 +1150,30 @@
                 const q = this.questions[this.currentIndex];
                 const buttons = document.querySelectorAll('.option-btn');
                 buttons.forEach(b => b.style.pointerEvents = 'none');
-                if (selectedIndex === q.ans) { if(btnElement) btnElement.classList.add('correct'); this.score++; } 
-                else { if(btnElement) btnElement.classList.add('wrong'); buttons[q.ans].classList.add('correct'); }
-                setTimeout(() => { this.currentIndex++; this.renderQuestion(); }, 1800);
+                
+                if (selectedIndex === q.ans) { 
+                    if (btnElement) btnElement.classList.add('correct'); 
+                    this.score++; 
+                } else { 
+                    if (btnElement) btnElement.classList.add('wrong'); 
+                    if (buttons[q.ans]) buttons[q.ans].classList.add('correct'); 
+                }
+                
+                setTimeout(() => { 
+                    this.currentIndex++; 
+                    this.renderQuestion(); 
+                }, 1600);
             }
             endQuiz() {
                 this.isFinished = true;
-                this.container.innerHTML = `<h2 class="completion-msg">Diagnóstico de Red Finalizado</h2><p style="text-align:center; font-size: 1.5rem; margin-top:1rem;">Precisión de Enrutamiento: ${this.score} / ${this.questions.length}</p><div style="text-align:center; margin-top:2rem;"><button class="nav-btn" onclick="quizApp.start()">Reiniciar Ping</button></div>`;
+                this.container.innerHTML = `
+                    <h2 class="completion-msg">Diagnóstico de Red Finalizado</h2>
+                    <p style="text-align:center; font-size: 1.3rem; margin-top:1rem; color:var(--text-main);">
+                        Precisión de Enrutamiento: <strong>${this.score} / ${this.questions.length}</strong>
+                    </p>
+                    <div style="text-align:center; margin-top:1.8rem;">
+                        <button class="nav-btn" onclick="quizApp.start()">Reiniciar Ping</button>
+                    </div>`;
                 this.timerBar.style.width = '0%';
                 if (this.score === this.questions.length) fireConfetti();
             }
@@ -530,7 +1181,7 @@
 
         /**
          * ========================================================================
-         * MÓDULO 3: DRAG & DROP
+         * MÓDULO 3: DRAG & DROP & TOUCH SELECTION
          * ========================================================================
          */
         class DragDropManager {
@@ -539,41 +1190,124 @@
                 this.termsCol = document.getElementById('dd-terms');
                 this.defsCol = document.getElementById('dd-defs');
                 this.matches = 0;
+                this.selectedId = null;
             }
             init() {
-                this.termsCol.innerHTML = ''; this.defsCol.innerHTML = ''; this.matches = 0;
+                this.termsCol.innerHTML = ''; 
+                this.defsCol.innerHTML = ''; 
+                this.matches = 0;
+                this.selectedId = null;
+
                 const terms = [...this.data].sort(() => Math.random() - 0.5);
                 const defs = [...this.data].sort(() => Math.random() - 0.5);
 
                 terms.forEach(item => {
-                    const el = document.createElement('div'); el.className = 'draggable-term'; el.draggable = true; el.textContent = item.term; el.dataset.id = item.id;
-                    el.ondragstart = (e) => { e.dataTransfer.setData('text/plain', item.id); setTimeout(() => el.style.opacity = '0.4', 0); };
+                    const el = document.createElement('div');
+                    el.className = 'draggable-term';
+                    el.draggable = true;
+                    el.textContent = item.term;
+                    el.dataset.id = item.id;
+                    el.setAttribute('tabindex', '0');
+                    el.setAttribute('role', 'button');
+
+                    // Drag Support
+                    el.ondragstart = (e) => {
+                        this.selectTerm(item.id);
+                        e.dataTransfer.setData('text/plain', item.id);
+                        setTimeout(() => el.style.opacity = '0.4', 0);
+                    };
                     el.ondragend = () => el.style.opacity = '1';
+
+                    // Touch / Click Support
+                    el.onclick = () => {
+                        if (el.classList.contains('placed')) return;
+                        this.selectTerm(item.id);
+                    };
+
                     this.termsCol.appendChild(el);
                 });
 
                 defs.forEach(item => {
-                    const zone = document.createElement('div'); zone.className = 'drop-zone'; zone.dataset.matchId = item.id;
-                    zone.innerHTML = `<p style="pointer-events:none; font-size:0.95rem; text-align:center;">${item.desc}</p>`;
-                    zone.ondragover = e => { e.preventDefault(); if(!zone.classList.contains('matched')) zone.classList.add('drag-over'); };
+                    const zone = document.createElement('div');
+                    zone.className = 'drop-zone';
+                    zone.dataset.matchId = item.id;
+                    zone.setAttribute('tabindex', '0');
+                    zone.innerHTML = `<p style="pointer-events:none; font-size:clamp(0.85rem, 2vw, 0.95rem); text-align:center;">${item.desc}</p>`;
+
+                    // Drag Drop handlers
+                    zone.ondragover = e => {
+                        e.preventDefault();
+                        if (!zone.classList.contains('matched')) zone.classList.add('drag-over');
+                    };
                     zone.ondragleave = () => zone.classList.remove('drag-over');
-                    zone.ondrop = e => this.handleDrop(e, zone);
+                    zone.ondrop = e => {
+                        e.preventDefault();
+                        zone.classList.remove('drag-over');
+                        const draggedId = e.dataTransfer.getData('text/plain') || this.selectedId;
+                        this.processMatch(draggedId, zone);
+                    };
+
+                    // Touch Click handlers
+                    zone.onclick = () => {
+                        if (zone.classList.contains('matched')) return;
+                        if (this.selectedId) {
+                            this.processMatch(this.selectedId, zone);
+                        }
+                    };
+
                     this.defsCol.appendChild(zone);
                 });
             }
-            handleDrop(e, zone) {
-                e.preventDefault(); zone.classList.remove('drag-over');
-                if (zone.classList.contains('matched')) return;
-                const draggedId = e.dataTransfer.getData('text/plain');
-                if (draggedId === zone.dataset.matchId) {
-                    const draggedEl = document.querySelector(`.draggable-term[data-id="${draggedId}"]`);
-                    zone.innerHTML = ''; zone.appendChild(draggedEl);
-                    draggedEl.draggable = false; draggedEl.style.margin = '0'; draggedEl.style.border = 'none';
-                    zone.classList.add('matched'); this.matches++;
-                    if (this.matches === this.data.length) { setTimeout(() => fireConfetti(), 300); }
+
+            selectTerm(id) {
+                if (this.selectedId === id) {
+                    this.clearSelection();
+                    return;
+                }
+                this.selectedId = id;
+                document.querySelectorAll('.draggable-term').forEach(t => {
+                    if (t.dataset.id === id) t.classList.add('selected');
+                    else t.classList.remove('selected');
+                });
+                document.querySelectorAll('.drop-zone:not(.matched)').forEach(z => {
+                    z.classList.add('zone-active');
+                });
+            }
+
+            clearSelection() {
+                this.selectedId = null;
+                document.querySelectorAll('.draggable-term').forEach(t => t.classList.remove('selected'));
+                document.querySelectorAll('.drop-zone').forEach(z => z.classList.remove('zone-active'));
+            }
+
+            processMatch(termId, zone) {
+                if (!termId || zone.classList.contains('matched')) return;
+                if (termId === zone.dataset.matchId) {
+                    const draggedEl = document.querySelector(`.draggable-term[data-id="${termId}"]`);
+                    if (draggedEl) {
+                        draggedEl.classList.remove('selected');
+                        draggedEl.classList.add('placed');
+                        zone.innerHTML = '';
+                        zone.appendChild(draggedEl);
+                        draggedEl.draggable = false;
+                        draggedEl.style.margin = '0';
+                        draggedEl.style.border = 'none';
+                        draggedEl.style.width = '100%';
+                        zone.classList.add('matched');
+                        this.matches++;
+                        this.clearSelection();
+                        if (this.matches === this.data.length) {
+                            setTimeout(() => fireConfetti(), 300);
+                        }
+                    }
                 } else {
                     const origBorder = zone.style.borderColor;
-                    zone.style.borderColor = 'var(--accent-alert)'; setTimeout(() => zone.style.borderColor = origBorder, 500);
+                    zone.style.borderColor = 'var(--accent-alert)';
+                    zone.classList.add('shake-zone');
+                    setTimeout(() => {
+                        zone.style.borderColor = origBorder;
+                        zone.classList.remove('shake-zone');
+                    }, 500);
                 }
             }
         }
@@ -593,12 +1327,11 @@
             init() {
                 this.container.innerHTML = '';
                 this.data.forEach((item, index) => {
-                    // Remover acentos para facilitar la validación
                     let htmlText = item.text.replace(/\[(.*?)\]/g, (match, p1) => {
                         const cleanAnswer = p1.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                        return `<input type="text" class="blank-input" data-answer="${cleanAnswer}" autocomplete="off">`;
+                        return `<input type="text" class="blank-input" data-answer="${cleanAnswer}" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">`;
                     });
-                    this.container.innerHTML += `<p style="margin-bottom: 1.5rem;">${index + 1}. ${htmlText}</p>`;
+                    this.container.innerHTML += `<div class="fill-item">${index + 1}. ${htmlText}</div>`;
                 });
 
                 this.btnCheck.onclick = () => this.checkAnswers();
@@ -606,11 +1339,11 @@
             checkAnswers() {
                 const inputs = this.container.querySelectorAll('.blank-input');
                 let allCorrect = true;
-                
+
                 inputs.forEach(input => {
                     const answer = input.getAttribute('data-answer');
                     const userVal = input.value.trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                    
+
                     if (userVal === answer) {
                         input.classList.remove('wrong');
                         input.classList.add('correct');
@@ -618,7 +1351,7 @@
                         input.classList.remove('correct');
                         input.classList.add('wrong');
                         allCorrect = false;
-                        void input.offsetWidth; 
+                        void input.offsetWidth;
                     }
                 });
 
@@ -636,16 +1369,18 @@
          * MÓDULO 5: CLASIFICADOR (CIRCUITOS VS PAQUETES)
          * ========================================================================
          */
-         class BinarySorterManager {
+        class BinarySorterManager {
             constructor(data) {
                 this.data = [...data].sort(() => Math.random() - 0.5);
                 this.pool = document.getElementById('sorter-pool');
+                this.selectedItem = null;
                 this.init();
             }
             init() {
                 this.pool.innerHTML = '';
                 document.getElementById('bin-circuitos').innerHTML = '';
                 document.getElementById('bin-paquetes').innerHTML = '';
+                this.selectedItem = null;
 
                 this.data.forEach(item => {
                     const el = document.createElement('div');
@@ -653,42 +1388,92 @@
                     el.draggable = true;
                     el.textContent = item.text;
                     el.dataset.type = item.type;
-                    
-                    el.ondragstart = (e) => { e.dataTransfer.setData('text/plain', item.type); e.dataTransfer.setData('text/id', item.id); el.id = item.id; setTimeout(() => el.style.opacity = '0.4', 0); };
+                    el.dataset.id = item.id;
+                    el.id = item.id;
+                    el.setAttribute('tabindex', '0');
+                    el.setAttribute('role', 'button');
+
+                    // Drag handlers
+                    el.ondragstart = (e) => {
+                        this.selectItem(item.id);
+                        e.dataTransfer.setData('text/plain', item.type);
+                        e.dataTransfer.setData('text/id', item.id);
+                        setTimeout(() => el.style.opacity = '0.4', 0);
+                    };
                     el.ondragend = () => el.style.opacity = '1';
-                    
+
+                    // Touch / Click handlers
+                    el.onclick = () => {
+                        this.selectItem(item.id);
+                    };
+
                     this.pool.appendChild(el);
                 });
 
                 document.querySelectorAll('.bin').forEach(bin => {
-                    bin.ondragover = e => { e.preventDefault(); bin.style.backgroundColor = 'rgba(255,255,255,0.05)'; };
-                    bin.ondragleave = () => bin.style.backgroundColor = 'var(--bg-secondary)';
-                    bin.ondrop = e => this.handleDrop(e, bin);
+                    bin.ondragover = e => {
+                        e.preventDefault();
+                        bin.style.backgroundColor = 'rgba(255,255,255,0.08)';
+                    };
+                    bin.ondragleave = () => {
+                        bin.style.backgroundColor = 'var(--bg-secondary)';
+                    };
+                    bin.ondrop = e => {
+                        e.preventDefault();
+                        bin.style.backgroundColor = 'var(--bg-secondary)';
+                        const draggedType = e.dataTransfer.getData('text/plain') || (this.selectedItem ? this.selectedItem.dataset.type : null);
+                        const draggedId = e.dataTransfer.getData('text/id') || (this.selectedItem ? this.selectedItem.id : null);
+                        this.processSort(draggedType, draggedId, bin);
+                    };
+
+                    // Touch / Click on bin
+                    bin.onclick = (e) => {
+                        if (e.target.closest('.sorter-item') && e.target.closest('.bin-items')) return;
+                        if (this.selectedItem) {
+                            this.processSort(this.selectedItem.dataset.type, this.selectedItem.id, bin);
+                        }
+                    };
                 });
             }
 
-            handleDrop(e, bin) {
-                e.preventDefault();
-                bin.style.backgroundColor = 'var(--bg-secondary)';
-                
-                const expectedType = bin.getAttribute('data-bin');
-                const draggedType = e.dataTransfer.getData('text/plain');
-                const draggedId = e.dataTransfer.getData('text/id');
+            selectItem(id) {
+                const el = document.getElementById(id);
+                if (!el || el.parentElement.classList.contains('bin-items')) return;
 
-                if (draggedType === expectedType) {
-                    const draggedEl = document.getElementById(draggedId);
+                if (this.selectedItem === el) {
+                    el.classList.remove('selected');
+                    this.selectedItem = null;
+                    return;
+                }
+
+                document.querySelectorAll('.sorter-item').forEach(i => i.classList.remove('selected'));
+                el.classList.add('selected');
+                this.selectedItem = el;
+            }
+
+            processSort(type, id, bin) {
+                if (!type || !id) return;
+                const expectedType = bin.getAttribute('data-bin');
+                const draggedEl = document.getElementById(id);
+                if (!draggedEl) return;
+
+                if (type === expectedType) {
+                    draggedEl.classList.remove('selected');
                     draggedEl.style.margin = '0';
                     draggedEl.style.backgroundColor = 'var(--bg-primary)';
                     draggedEl.style.border = `1px solid ${expectedType === 'circuitos' ? 'var(--accent-warning)' : 'var(--accent-interactive)'}`;
                     draggedEl.draggable = false;
-                    
+                    draggedEl.onclick = null;
+
                     bin.querySelector('.bin-items').appendChild(draggedEl);
-                    
+                    this.selectedItem = null;
+
                     if (this.pool.children.length === 0) fireConfetti();
                 } else {
-                    const el = document.getElementById(draggedId);
-                    el.style.backgroundColor = 'var(--accent-alert)';
-                    setTimeout(() => el.style.backgroundColor = 'var(--bg-tertiary)', 400);
+                    draggedEl.classList.remove('selected');
+                    draggedEl.style.backgroundColor = 'var(--accent-alert)';
+                    setTimeout(() => draggedEl.style.backgroundColor = 'var(--bg-tertiary)', 400);
+                    this.selectedItem = null;
                 }
             }
         }
@@ -701,10 +1486,11 @@
         const ddApp = new DragDropManager(StudyData.dragDrop);
         const fillApp = new FillBlanksManager(StudyData.fillBlanks);
         const sorterApp = new BinarySorterManager(StudyData.sorter);
-        
+
         quizApp.start();
         ddApp.init();
 
     </script>
 </body>
+
 </html>
